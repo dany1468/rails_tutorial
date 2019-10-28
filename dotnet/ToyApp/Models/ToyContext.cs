@@ -11,5 +11,6 @@ namespace ToyApp.Models
         }
 
         public DbSet<User> User { get; set; }
+        public DbSet<MicroPost> MicroPost { get; set; }
     }
 }
