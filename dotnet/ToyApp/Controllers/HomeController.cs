@@ -18,6 +18,11 @@ namespace ToyApp.Controllers
             _logger = logger;
         }
 
+        public IActionResult Hello()
+        {
+            return Content("hello, world!");
+        }
+
         public IActionResult Index()
         {
             return View();
