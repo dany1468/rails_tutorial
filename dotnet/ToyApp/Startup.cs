@@ -55,7 +55,7 @@ namespace ToyApp
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Hello}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
