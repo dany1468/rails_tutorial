@@ -9,5 +9,7 @@ namespace ToyApp.Models
         [StringLength(140)]
         public string Content { get; set; }
         public int UserID { get; set; }
+
+        public User User { get; set; }
     }
 }
