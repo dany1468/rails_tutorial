@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+
 namespace ToyApp.Models
 {
     public class User
@@ -7,6 +9,6 @@ namespace ToyApp.Models
         public string Name { get; set; }
         public string Email { get; set; }
 
-        ICollection<MicroPost> MicroPosts { get; set; }
+        public ICollection<MicroPost> MicroPosts { get; set; }
     }
 }
