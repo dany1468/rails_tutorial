@@ -22,5 +22,13 @@ namespace SampleApp.Tests
             var result = controller.Help();
             Assert.IsType<ViewResult>(result);
         }
+        
+        [Fact]
+        public void ShouldGetAbout()
+        {
+            var controller = new StaticPagesController();
+            var result = controller.About();
+            Assert.IsType<ViewResult>(result);
+        }
     }
 }
