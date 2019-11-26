@@ -8,7 +8,12 @@ namespace SampleApp.Controllers
 {
     public class StaticPagesController : Controller
     {
-        public IActionResult Index()
+        public IActionResult Home()
+        {
+            return View();
+        }
+        
+        public IActionResult Help()
         {
             return View();
         }
