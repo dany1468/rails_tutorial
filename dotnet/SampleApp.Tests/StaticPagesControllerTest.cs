@@ -18,22 +18,23 @@ namespace SampleApp.Tests
         }
 
         [Theory]
-        [InlineData("Home")]
-        [InlineData("Help")]
-        [InlineData("About")]
-        public async Task ShouldGetHome(string page)
+        [InlineData("/", "Home")]
+        [InlineData("/StaticPages/Home", "Home")]
+        [InlineData("/StaticPages/Help", "Help")]
+        [InlineData("/StaticPages/About", "About")]
+        public async Task ShouldGetPage(string url, string pageName)
         {
             // Arrange
             using var client = _factory.CreateClient();
 
             // Act
-            using var response = await client.GetAsync($"/StaticPages/{page}");
+            using var response = await client.GetAsync(url);
 
             // Assert
             response.EnsureSuccessStatusCode(); // Status Code 200-299
             
             var content = await response.Content.ReadAsHtmlDocumentAsync();
-            Assert.Equal($"{page} | {_baseTitle}", content.GetTitle());
+            Assert.Equal($"{pageName} | {_baseTitle}", content.GetTitle());
         }
     }
 }
