@@ -1,34 +1,39 @@
-using System;
-using Microsoft.AspNetCore.Mvc;
-using SampleApp.Controllers;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using LtGt;
+using LtGt.Models;
 
 namespace SampleApp.Tests
 {
-    public class StaticPagesControllerTest
+    public class StaticPagesControllerTest : IClassFixture<WebApplicationFactory<Startup>>
     {
-        [Fact]
-        public void ShouldGetHome()
+        private readonly WebApplicationFactory<Startup> _factory;
+        private readonly string _baseTitle; 
+
+        public StaticPagesControllerTest(WebApplicationFactory<Startup> factory)
         {
-            var controller = new StaticPagesController();
-            var result = controller.Home();
-            Assert.IsType<ViewResult>(result);
+            _factory = factory;
+            _baseTitle = "Ruby on Rails Tutorial Sample App";
         }
-        
-        [Fact]
-        public void ShouldGetHelp()
+
+        [Theory]
+        [InlineData("Home")]
+        [InlineData("Help")]
+        [InlineData("About")]
+        public async Task ShouldGetHome(string page)
         {
-            var controller = new StaticPagesController();
-            var result = controller.Help();
-            Assert.IsType<ViewResult>(result);
-        }
-        
-        [Fact]
-        public void ShouldGetAbout()
-        {
-            var controller = new StaticPagesController();
-            var result = controller.About();
-            Assert.IsType<ViewResult>(result);
+            // Arrange
+            using var client = _factory.CreateClient();
+
+            // Act
+            using var response = await client.GetAsync($"/StaticPages/{page}");
+
+            // Assert
+            response.EnsureSuccessStatusCode(); // Status Code 200-299
+            
+            var content = await response.Content.ReadAsHtmlDocumentAsync();
+            Assert.Equal($"{page} | {_baseTitle}", content.GetTitle());
         }
     }
 }
